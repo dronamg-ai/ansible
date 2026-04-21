@@ -1,0 +1,16 @@
+---
+- name: Create systemd service files
+  template:
+    src: container.service.j2
+    dest: "/etc/systemd/system/{{ item.name }}.service"
+    mode: '0644'
+  loop: "{{ web_containers }}"
+  notify: reload systemd
+
+- name: Start and Enable Apache services
+  systemd:
+    name: "{{ item.name }}"
+    state: started
+    enabled: yes
+    daemon_reload: yes
+  loop: "{{ web_containers }}"

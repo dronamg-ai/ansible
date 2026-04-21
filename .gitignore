@@ -1,0 +1,4 @@
+*.retry
+*.pyc
+.ansible_cache
+.venv/
